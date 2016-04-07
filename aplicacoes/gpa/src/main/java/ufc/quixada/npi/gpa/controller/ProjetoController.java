@@ -48,6 +48,7 @@ import ufc.quixada.npi.gpa.model.Documento;
 import ufc.quixada.npi.gpa.model.Parecer;
 import ufc.quixada.npi.gpa.model.Parecer.StatusPosicionamento;
 import ufc.quixada.npi.gpa.model.Participacao;
+import ufc.quixada.npi.gpa.model.Participacao.TipoParticipacao;
 import ufc.quixada.npi.gpa.model.Pessoa;
 import ufc.quixada.npi.gpa.model.Projeto;
 import ufc.quixada.npi.gpa.model.Projeto.Evento;
@@ -225,6 +226,7 @@ public class ProjetoController {
 	public String listarParticipacoes(@PathVariable("id") Long id, Model model, 
 			HttpSession session, RedirectAttributes redirectAttributes, Authentication authentication) {
 		Projeto projeto = projetoService.getProjeto(id);
+		model.addAttribute("tiposDeParticipacao",TipoParticipacao.values());
 		if (projeto == null) {
 			redirectAttributes.addFlashAttribute("erro", MENSAGEM_PROJETO_INEXISTENTE);
 			return REDIRECT_PAGINA_LISTAR_PROJETO;
@@ -246,11 +248,12 @@ public class ProjetoController {
 	@RequestMapping(value = "/participacoes/{idProjeto}", method = RequestMethod.POST)
 	public String adicionarParticipacao(@PathVariable("idProjeto") Long idProjeto,
 			@RequestParam(value = "participanteSelecionado", required = true) Long idParticipanteSelecionado,
+			@RequestParam(value = "tipoSelecionado", required = true) String tipoParticipacaoSelecionado,
 			Participacao participacao, HttpSession session, Model model, 
 			BindingResult result, RedirectAttributes redirectAttributes, Authentication authentication) {
 
 		Projeto projeto = projetoService.getProjeto(idProjeto);
-
+		model.addAttribute("tiposDeParticipacao",TipoParticipacao.values());
 		if (projeto == null) {
 			redirectAttributes.addFlashAttribute("erro", MENSAGEM_PROJETO_INEXISTENTE);
 			return REDIRECT_PAGINA_LISTAR_PROJETO;
@@ -263,7 +266,7 @@ public class ProjetoController {
 		
 		participacao.setParticipante(pessoaService.getPessoa(idParticipanteSelecionado));
 		participacao.setProjeto(projeto);
-		
+		participacao.setTipo(TipoParticipacao.valueOf(tipoParticipacaoSelecionado));
 		participacaoValidator.validate(participacao, result);
 		if(result.hasErrors()){			
 			model.addAttribute("projeto", projeto);
@@ -314,6 +317,7 @@ public class ProjetoController {
 		model.addAttribute("projeto", projeto);
 		model.addAttribute("participacao", new Participacao());
 		model.addAttribute("pessoas", pessoaService.getAll());
+		model.addAttribute("tiposDeParticipacao",TipoParticipacao.values());
 		return "redirect:/" + PAGINA_VINCULAR_PARTICIPANTES_PROJETO + "/" + idProjeto;
 	}
 

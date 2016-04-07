@@ -3,6 +3,8 @@ package ufc.quixada.npi.gpa.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,6 +25,9 @@ public class Participacao {
 	
 	@OneToOne
 	private Pessoa participante;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoParticipacao tipo;
 	
 	private Integer mesInicio;
 	private Integer anoInicio;
@@ -102,6 +107,14 @@ public class Participacao {
 	public void setParticipante(Pessoa participante) {
 		this.participante = participante;
 	}
+	
+	public TipoParticipacao getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoParticipacao tipo) {
+		this.tipo = tipo;
+	}
 
 	@Override
 	public String toString() {
@@ -117,5 +130,19 @@ public class Participacao {
 		}
 		Participacao participacao = (Participacao) obj;
 		return toString().equals(participacao.toString());
+	}
+	
+	public enum TipoParticipacao{
+		ALUNO("ALUNO"),PESQUISADOR("PESQUISADOR"),DOCENTE("DOCENTE"),TECNICO_ADMINISTRATIVO("TÉCNICO ADMINISTRATIVO");
+		
+		String descricao;
+		
+		private TipoParticipacao(String descricao){
+			this.descricao = descricao;
+		}
+		
+		public String getDescricao(){
+			return this.descricao;
+		}
 	}
 }
