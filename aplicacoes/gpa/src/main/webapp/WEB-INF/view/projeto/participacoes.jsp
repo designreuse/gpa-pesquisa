@@ -79,15 +79,9 @@
 							<div class="form-item">
 								<label for="tipoParticipante" class="col-sm-2 control-label">Tipo de participante:</label>
 								<div class="col-sm-4">
-									<select id="tipoParticipante" name="tipoSelecionado" class="form-control">
-										<c:set var="part" value="${tiposDeParticipacao }"></c:set>
+									<select id="tipoParticipante" name="tipo" class="form-control">
 										<c:forEach items="${tiposDeParticipacao}" var="tipo">
-											<c:set var="selected" value=""></c:set>
-											<c:set var="tipoSelecionado" value="id=${tipo }"></c:set>
-											<c:if test="${fn:contains(part, tipoSelecionado)}">
-												<c:set var="selected" value="selected=\"selected\""></c:set>
-											</c:if>
-											<option value="${tipo }" ${selected} >${tipo.descricao}</option>
+											<option value="${tipo }" >${tipo.descricao}</option>
 										</c:forEach>
 									</select>
 								</div>

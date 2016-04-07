@@ -148,11 +148,6 @@ public class ProjetoController {
 			}
 		}
 
-//		projetoService.cadastrar(projeto);
-//
-//		if (!documentos.isEmpty()) {
-//			documentoService.salvar(documentos,projeto.getCodigo());
-//		}
 		for (Documento documento : documentos) {
 			projeto.addDocumento(documento);
 		}
@@ -248,7 +243,6 @@ public class ProjetoController {
 	@RequestMapping(value = "/participacoes/{idProjeto}", method = RequestMethod.POST)
 	public String adicionarParticipacao(@PathVariable("idProjeto") Long idProjeto,
 			@RequestParam(value = "participanteSelecionado", required = true) Long idParticipanteSelecionado,
-			@RequestParam(value = "tipoSelecionado", required = true) String tipoParticipacaoSelecionado,
 			Participacao participacao, HttpSession session, Model model, 
 			BindingResult result, RedirectAttributes redirectAttributes, Authentication authentication) {
 
@@ -266,7 +260,6 @@ public class ProjetoController {
 		
 		participacao.setParticipante(pessoaService.getPessoa(idParticipanteSelecionado));
 		participacao.setProjeto(projeto);
-		participacao.setTipo(TipoParticipacao.valueOf(tipoParticipacaoSelecionado));
 		participacaoValidator.validate(participacao, result);
 		if(result.hasErrors()){			
 			model.addAttribute("projeto", projeto);
@@ -361,10 +354,7 @@ public class ProjetoController {
 		}
 		
 		projetoValidator.validate(oldProjeto, result);
-		
-//		if (!documentos.isEmpty()) {
-//			documentoService.salvar(documentos, projeto.getCodigo());
-//		}
+
 		for (Documento documento : documentos) {
 			oldProjeto.addDocumento(documento);
 		}
