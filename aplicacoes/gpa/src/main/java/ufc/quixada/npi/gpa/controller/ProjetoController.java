@@ -128,7 +128,7 @@ public class ProjetoController {
 		
 		projetoService.cadastrar(projeto);
 
-		projeto.setValorProjeto(projeto.getValorProjeto().setScale(2, RoundingMode.FLOOR));
+		//projeto.setValorProjeto(projeto.getValorProjeto().setScale(2, RoundingMode.FLOOR));
 		
 		List<Documento> documentos = new ArrayList<Documento>();
 		if (anexos != null && anexos.length != 0) {
