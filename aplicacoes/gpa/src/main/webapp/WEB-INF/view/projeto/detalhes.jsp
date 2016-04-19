@@ -242,7 +242,7 @@
 										<c:if test="${projeto.status != 'AGUARDANDO_PARECER'}">
 											<label class="col-sm-2 control-label">Posicionamento:</label>
 											<div class="col-sm-4 value-label">
-												<label>${projeto.parecer.status }</label>
+												<label>${projeto.parecer.status.descricao }</label>
 											</div>						
 										</c:if>
 										<label class="col-sm-2 control-label">Parecer:</label>
@@ -276,7 +276,7 @@
 										<c:if test="${not empty projeto.parecerRelator.status}">
 											<label class="col-sm-2 control-label">Posicionamento:</label>
 											<div class="col-sm-4 value-label">
-												<label>${projeto.parecerRelator.status }</label>
+												<label>${projeto.parecerRelator.status.descricao }</label>
 											</div>						
 										
 											<label class="col-sm-2 control-label">Observação:</label>
